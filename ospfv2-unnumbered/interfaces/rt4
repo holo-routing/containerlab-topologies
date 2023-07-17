@@ -1,0 +1,29 @@
+auto lo
+auto eth1
+auto eth2
+auto eth3
+auto eth4
+
+iface lo inet static
+    address 4.4.4.4
+    netmask 255.255.255.255
+
+iface eth1 inet static
+    address 4.4.4.4
+    netmask 255.255.255.255
+    mtu 1500
+
+iface eth2 inet static
+    address 4.4.4.4
+    netmask 255.255.255.255
+    mtu 1500
+
+iface eth3 inet static
+    address 4.4.4.4
+    netmask 255.255.255.255
+    mtu 1500
+
+iface eth4 inet static
+    address 4.4.4.4
+    netmask 255.255.255.255
+    mtu 1500

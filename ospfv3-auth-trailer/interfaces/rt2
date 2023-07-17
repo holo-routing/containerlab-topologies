@@ -1,0 +1,12 @@
+auto lo
+auto eth1
+auto eth2
+auto eth3
+
+iface lo inet6 static
+    address 2001:db8::2
+    netmask 128
+
+iface lo inet6 static
+    address fe80::1
+    netmask 64
