@@ -1,0 +1,127 @@
+#                         +---------+
+#                         |         |
+#                         |   RT1   |
+#                         | 1.1.1.1 |
+#                         |         |
+#                         +---------+
+#                              |eth1
+#                              |
+#         +---------+          |          +---------+
+#         |         |          |          |         |
+#         |   RT2   |eth1      |      eth1|   RT3   |
+#         | 2.2.2.2 +----------+----------+ 3.3.3.3 |
+#         |         |                     |         |
+#         +---------+                     +---------+
+#         eth2|  |eth3                    eth2|  |eth3
+#             |  |                            |  |
+#         eth1|  |eth2                    eth1|  |eth2
+#         +---------+                     +---------+
+#         |         |                     |         |
+#         |   RT4   |                     |   RT5   |
+#         | 4.4.4.4 +---------------------+ 5.5.5.5 |
+#         |         |eth3             eth3|         |
+#         +---------+                     +---------+
+#          eth4|                                |eth4
+#              |          +---------+           |
+#              |          |         |           |
+#              |          |   RT6   |           |
+#              +----------+ 6.6.6.6 +-----------+
+#                     eth1|         |eth2
+#                         +---------+
+#
+# Area 0: rt1, rt2, rt3, rt4, rt5, rt6
+#
+# The interfaces connected to the bridge (br1) are configured in the broadcast mode.
+# All other interfaces are configured in the point-to-point mode.
+# SR is enabled on all routers, each of which having a Prefix-SID configured for the loopback address.
+
+name: ospfv3-ipv4-sr
+
+topology:
+  defaults:
+    binds:
+      - ../scripts/start.sh:/start.sh
+    exec:
+      - "/start.sh"
+
+  kinds:
+    ceos:
+      image: ceos:4.30.1F
+    srl:
+      image: ghcr.io/nokia/srlinux
+
+  nodes:
+    br1:
+      kind: bridge
+
+    rt1:
+      # Linux
+      kind: linux
+      image: ghcr.io/rwestphal/holo:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt1:/etc/network/interfaces
+        - holo/rt1.conf:/etc/holo.startup
+
+    rt2:
+      # Linux
+      kind: linux
+      image: ghcr.io/rwestphal/holo:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt2:/etc/network/interfaces
+        - holo/rt2.conf:/etc/holo.startup
+
+    rt3:
+      # Linux
+      kind: linux
+      image: ghcr.io/rwestphal/holo:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt3:/etc/network/interfaces
+        - holo/rt3.conf:/etc/holo.startup
+
+    rt4:
+      # Linux
+      kind: linux
+      image: ghcr.io/rwestphal/holo:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt4:/etc/network/interfaces
+        - holo/rt4.conf:/etc/holo.startup
+
+    rt5:
+      # Linux
+      kind: linux
+      image: ghcr.io/rwestphal/holo:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt5:/etc/network/interfaces
+        - holo/rt5.conf:/etc/holo.startup
+
+    rt6:
+      # Linux
+      kind: linux
+      image: ghcr.io/rwestphal/holo:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt6:/etc/network/interfaces
+        - holo/rt6.conf:/etc/holo.startup
+
+  links:
+    - endpoints: ["rt1:eth1", "br1:eth1"]
+    - endpoints: ["rt2:eth1", "br1:eth2"]
+    - endpoints: ["rt3:eth1", "br1:eth3"]
+    - endpoints: ["rt2:eth2", "rt4:eth1"]
+    - endpoints: ["rt2:eth3", "rt4:eth2"]
+    - endpoints: ["rt3:eth2", "rt5:eth1"]
+    - endpoints: ["rt3:eth3", "rt5:eth2"]
+    - endpoints: ["rt4:eth3", "rt5:eth3"]
+    - endpoints: ["rt4:eth4", "rt6:eth1"]
+    - endpoints: ["rt5:eth4", "rt6:eth2"]
