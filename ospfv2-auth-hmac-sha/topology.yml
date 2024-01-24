@@ -55,7 +55,7 @@ topology:
     rt1:
       # Linux
       kind: linux
-      image: ghcr.io/rwestphal/holo:latest
+      image: ghcr.io/holo-routing/holo:latest
       #image: ghcr.io/srl-labs/bird:2.13
 
       # Arista cEOS
@@ -71,7 +71,7 @@ topology:
     rt2:
       # Linux
       kind: linux
-      image: ghcr.io/rwestphal/holo:latest
+      image: ghcr.io/holo-routing/holo:latest
       #image: ghcr.io/srl-labs/bird:2.13
 
       # Arista cEOS
@@ -87,7 +87,7 @@ topology:
     rt3:
       # Linux
       kind: linux
-      image: ghcr.io/rwestphal/holo:latest
+      image: ghcr.io/holo-routing/holo:latest
       #image: ghcr.io/srl-labs/bird:2.13
 
       # Arista cEOS
@@ -103,7 +103,7 @@ topology:
     rt4:
       # Linux
       kind: linux
-      image: ghcr.io/rwestphal/holo:latest
+      image: ghcr.io/holo-routing/holo:latest
       #image: ghcr.io/srl-labs/bird:2.13
 
       # Arista cEOS
@@ -119,7 +119,7 @@ topology:
     rt5:
       # Linux
       kind: linux
-      image: ghcr.io/rwestphal/holo:latest
+      image: ghcr.io/holo-routing/holo:latest
       #image: ghcr.io/srl-labs/bird:2.13
 
       # Arista cEOS
@@ -135,7 +135,7 @@ topology:
     rt6:
       # Linux
       kind: linux
-      image: ghcr.io/rwestphal/holo:latest
+      image: ghcr.io/holo-routing/holo:latest
       #image: ghcr.io/srl-labs/bird:2.13
 
       # Arista cEOS

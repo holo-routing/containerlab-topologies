@@ -40,12 +40,12 @@ The topology initialization may take a few seconds, depending on the router imag
 +---+-----------------+--------------+-------------------------------+-------+---------+----------------+----------------------+
 | # |      Name       | Container ID |             Image             | Kind  |  State  |  IPv4 Address  |     IPv6 Address     |
 +---+-----------------+--------------+-------------------------------+-------+---------+----------------+----------------------+
-| 1 | clab-ospfv2-rt1 | 2746124fb722 | ghcr.io/rwestphal/holo:latest | linux | running | 172.20.20.3/24 | 2001:172:20:20::3/64 |
-| 2 | clab-ospfv2-rt2 | 83946a575b4d | ghcr.io/rwestphal/holo:latest | linux | running | 172.20.20.7/24 | 2001:172:20:20::7/64 |
-| 3 | clab-ospfv2-rt3 | 55d6b054af64 | ghcr.io/rwestphal/holo:latest | linux | running | 172.20.20.4/24 | 2001:172:20:20::4/64 |
-| 4 | clab-ospfv2-rt4 | 173125d65817 | ghcr.io/rwestphal/holo:latest | linux | running | 172.20.20.2/24 | 2001:172:20:20::2/64 |
-| 5 | clab-ospfv2-rt5 | d7051036115c | ghcr.io/rwestphal/holo:latest | linux | running | 172.20.20.5/24 | 2001:172:20:20::5/64 |
-| 6 | clab-ospfv2-rt6 | 64b6e768bca1 | ghcr.io/rwestphal/holo:latest | linux | running | 172.20.20.6/24 | 2001:172:20:20::6/64 |
+| 1 | clab-ospfv2-rt1 | 2746124fb722 | ghcr.io/holo-routing/holo:latest | linux | running | 172.20.20.3/24 | 2001:172:20:20::3/64 |
+| 2 | clab-ospfv2-rt2 | 83946a575b4d | ghcr.io/holo-routing/holo:latest | linux | running | 172.20.20.7/24 | 2001:172:20:20::7/64 |
+| 3 | clab-ospfv2-rt3 | 55d6b054af64 | ghcr.io/holo-routing/holo:latest | linux | running | 172.20.20.4/24 | 2001:172:20:20::4/64 |
+| 4 | clab-ospfv2-rt4 | 173125d65817 | ghcr.io/holo-routing/holo:latest | linux | running | 172.20.20.2/24 | 2001:172:20:20::2/64 |
+| 5 | clab-ospfv2-rt5 | d7051036115c | ghcr.io/holo-routing/holo:latest | linux | running | 172.20.20.5/24 | 2001:172:20:20::5/64 |
+| 6 | clab-ospfv2-rt6 | 64b6e768bca1 | ghcr.io/holo-routing/holo:latest | linux | running | 172.20.20.6/24 | 2001:172:20:20::6/64 |
 +---+-----------------+--------------+-------------------------------+-------+---------+----------------+----------------------+
 ```
 
