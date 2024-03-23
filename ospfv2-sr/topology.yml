@@ -59,7 +59,7 @@ topology:
       # Linux
       kind: linux
       image: ghcr.io/holo-routing/holo:latest
-      #image: frrouting/frr:v8.4.0
+      #image: quay.io/frrouting/frr:9.0.2
 
       # Bind mounts
       binds:
@@ -71,7 +71,7 @@ topology:
       # Linux
       kind: linux
       image: ghcr.io/holo-routing/holo:latest
-      #image: frrouting/frr:v8.4.0
+      #image: quay.io/frrouting/frr:9.0.2
 
       # Bind mounts
       binds:
@@ -83,7 +83,7 @@ topology:
       # Linux
       kind: linux
       image: ghcr.io/holo-routing/holo:latest
-      #image: frrouting/frr:v8.4.0
+      #image: quay.io/frrouting/frr:9.0.2
 
       # Bind mounts
       binds:
@@ -95,7 +95,7 @@ topology:
       # Linux
       kind: linux
       image: ghcr.io/holo-routing/holo:latest
-      #image: frrouting/frr:v8.4.0
+      #image: quay.io/frrouting/frr:9.0.2
 
       # Bind mounts
       binds:
@@ -107,7 +107,7 @@ topology:
       # Linux
       kind: linux
       image: ghcr.io/holo-routing/holo:latest
-      #image: frrouting/frr:v8.4.0
+      #image: quay.io/frrouting/frr:9.0.2
 
       # Bind mounts
       binds:
@@ -119,7 +119,7 @@ topology:
       # Linux
       kind: linux
       image: ghcr.io/holo-routing/holo:latest
-      #image: frrouting/frr:v8.4.0
+      #image: quay.io/frrouting/frr:9.0.2
 
       # Bind mounts
       binds:
