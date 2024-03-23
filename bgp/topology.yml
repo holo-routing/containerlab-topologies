@@ -1,0 +1,137 @@
+#         +---------+                     +---------+
+#         |         |                     |         |
+#         |   RT1   |eth1             eth1|   RT2   |
+#         | 1.1.1.1 +---------------------+ 2.2.2.2 |
+#         |         |     10.0.1.0/24     |         |
+#         +---------+                     +---------+
+#              |eth2                           |eth2
+#              |                               |
+#              |10.0.2.0/24                    |10.0.3.0/24
+#              |                               |
+#              |eth1                           |eth1
+#         +---------+                     +---------+
+#         |         |                     |         |
+#         |   RT3   |    172.16.1.0/24    |   RT4   |
+#         | 3.3.3.3 +---------------------+ 4.4.4.4 |
+#         |         |eth2             eth2|         |
+#         +---------+                     +---------+
+#
+# eBGP:
+# * rt1 (AS 65100) <-> rt2 (AS 65101)
+# * rt1 (AS 65100) <-> rt3 (AS 65000)
+# * rt2 (AS 65101) <-> rt4 (AS 65000)
+#
+# iBGP + OSPF:
+# * rt3 <-> rt4 (AS 65000)
+
+name: bgp
+
+topology:
+  defaults:
+    binds:
+      - ../scripts/start.sh:/start.sh
+      - frr/daemons:/etc/frr/daemons
+    exec:
+      - "/start.sh"
+
+  kinds:
+    ceos:
+      image: ceos:4.30.1F
+    srl:
+      image: ghcr.io/nokia/srlinux
+
+  nodes:
+    rt1:
+      # Linux
+      kind: linux
+      #image: ghcr.io/holo-routing/holo:latest
+      image: quay.io/frrouting/frr:9.0.2
+      #image: ghcr.io/srl-labs/bird:2.13
+
+      # Arista cEOS
+      #kind: ceos
+      #startup-config: arista-ceos/rt1.conf
+
+      # Nokia SR Linux
+      #kind: srl
+      #startup-config: nokia-srl/rt1.conf
+
+      # Bind mounts
+      binds:
+        - interfaces/rt1:/etc/network/interfaces
+        - bird/rt1.conf:/etc/bird.conf
+        - frr/rt1.conf:/etc/frr/frr.startup
+        - holo/rt1.conf:/etc/holo.startup
+
+    rt2:
+      # Linux
+      kind: linux
+      #image: ghcr.io/holo-routing/holo:latest
+      image: quay.io/frrouting/frr:9.0.2
+      #image: ghcr.io/srl-labs/bird:2.13
+
+      # Arista cEOS
+      #kind: ceos
+      #startup-config: arista-ceos/rt2.conf
+
+      # Nokia SR Linux
+      #kind: srl
+      #startup-config: nokia-srl/rt2.conf
+
+      # Bind mounts
+      binds:
+        - interfaces/rt2:/etc/network/interfaces
+        - bird/rt2.conf:/etc/bird.conf
+        - frr/rt2.conf:/etc/frr/frr.startup
+        - holo/rt2.conf:/etc/holo.startup
+
+    rt3:
+      # Linux
+      kind: linux
+      #image: ghcr.io/holo-routing/holo:latest
+      image: quay.io/frrouting/frr:9.0.2
+      #image: ghcr.io/srl-labs/bird:2.13
+
+      # Arista cEOS
+      #kind: ceos
+      #startup-config: arista-ceos/rt3.conf
+
+      # Nokia SR Linux
+      #kind: srl
+      #startup-config: nokia-srl/rt3.conf
+
+      # Bind mounts
+      binds:
+        - interfaces/rt3:/etc/network/interfaces
+        - bird/rt3.conf:/etc/bird.conf
+        - frr/rt3.conf:/etc/frr/frr.startup
+        - holo/rt3.conf:/etc/holo.startup
+
+    rt4:
+      # Linux
+      kind: linux
+      #image: ghcr.io/holo-routing/holo:latest
+      image: quay.io/frrouting/frr:9.0.2
+      #image: ghcr.io/srl-labs/bird:2.13
+
+      # Arista cEOS
+      #kind: ceos
+      #startup-config: arista-ceos/rt4.conf
+
+      # Nokia SR Linux
+      #kind: srl
+      #startup-config: nokia-srl/rt4.conf
+
+      # Bind mounts
+      binds:
+        - interfaces/rt4:/etc/network/interfaces
+        - bird/rt4.conf:/etc/bird.conf
+        - frr/rt4.conf:/etc/frr/frr.startup
+        - holo/rt4.conf:/etc/holo.startup
+
+  links:
+    - endpoints: ["rt1:eth1", "rt2:eth1"]
+    - endpoints: ["rt1:eth2", "rt3:eth1"]
+    - endpoints: ["rt2:eth2", "rt4:eth1"]
+    - endpoints: ["rt3:eth2", "rt4:eth2"]
+
