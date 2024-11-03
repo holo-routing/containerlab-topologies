@@ -1,11 +1,11 @@
 auto lo
-auto eth-sw1 
+auto eth-br1 
 
 iface lo inet static
     address 1.1.1.1
     netmask 255.255.255.255
 
-iface eth-sw1 inet static
+iface eth-br1 inet static
     address 10.0.1.1
     netmask 255.255.255.0
     mtu 1500
