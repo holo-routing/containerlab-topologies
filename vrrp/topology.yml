@@ -1,0 +1,84 @@
+#                                   +-------+
+#                                   |       |
+#                                   |   h1  |
+#                                   |       |
+#                                   +-------+
+#                                       | br-host
+#                                       | 10.0.1.3/24
+#                                       |
+#                                       |
+#                                       |
+#                                       |
+#                                  +---------+
+#                                  |         |
+#             +--------------------|   br1   |-------------------+
+#             |                    |         |                   |
+#             |                    +---------+                   |
+#             |                                                  |
+#             |                                                  |
+#             |                                                  |
+#             |                                                  |
+#             |  eth-br1                                         |  eth-br1
+#             |  10.0.1.1/24                                     |  10.0.1.2/24
+#     +-------------+              +----------+             +------------+
+#     |             |              |          |             |            |
+#     |    RT-1     |              |  Virtual |             |     RT-2   |
+#     |   1.1.1.1   |==============|  Router  |=============|   2.2.2.2  |
+#     |             |              |  10.0.1.5|             |            |
+#     +-------------+              +----------+             +------------+
+#
+# KEY:
+# -----   physical link
+# =====   virtual link
+
+name: vrrp 
+
+topology:
+  defaults:
+    binds:
+      - ../scripts/start.sh:/start.sh 
+      - frr/frr-setup.sh:/frr-setup.sh      
+      - frr/daemons:/etc/frr/daemons
+    exec:
+      - "/start.sh"
+      - "/frr-setup.sh"
+
+  nodes:
+
+    br1:
+      kind: bridge
+
+    rt-1:
+      kind: linux 
+
+      # ---- holod image ---- 
+      image: ghcr.io/holo-routing/holo:latest
+      
+      # ---- frr image ---- 
+      # image: quay.io/frrouting/frr:9.0.2
+
+      binds:
+        - interfaces/rt-1:/etc/network/interfaces 
+        - holo/rt-1.conf:/etc/holo.startup
+        - frr/rt-1.conf:/etc/frr/frr.startup
+
+    rt-2:
+      kind: linux 
+
+      # ---- holod image ---- 
+      image: ghcr.io/holo-routing/holo:latest
+      
+      # ---- frr image ---- 
+      # image: quay.io/frrouting/frr:9.0.2
+
+      binds:
+        - interfaces/rt-2:/etc/network/interfaces 
+        - holo/rt-2.conf:/etc/holo.startup
+        - frr/rt-2.conf:/etc/frr/frr.startup
+
+  links:
+    # 10.0.1.0/24
+    - endpoints: ["host:br-host", "br1:eth-h1"]
+    - endpoints: ["rt-1:eth-br1", "br1:eth-rt1"]
+    - endpoints: ["rt-2:eth-br1", "br1:eth-rt2"]
+
