@@ -1,0 +1,13 @@
+name: vrrp-keepalived
+
+
+topology:
+  nodes:
+    rt1:
+      kind: linux
+      image: ubuntu:24.04
+      binds:
+        - mine.sh:/kd.sh 
+        - rt1.conf:/etc/keepalived/keepalived.conf 
+      exec:
+        - "/kd.sh"

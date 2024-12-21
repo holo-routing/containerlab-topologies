@@ -64,16 +64,24 @@ topology:
       # image: quay.io/frrouting/frr:9.0.2
 
       # ---- RARE/free-rtr image ----
+      # kind: rare
       # NOTE: If 'kind:rare' is enabled, look through the links
       #   to understand how to configure.
-      #
-      # kind: rare
+
+      # ---- keepalived image ----
+      # kind: linux
+      # image: ghcr.io/paul-weqe/keepalived:latest
 
       binds:
         - interfaces/rt1:/etc/network/interfaces
         - holo/rt1.conf:/etc/holo.startup
         - frr/rt1.conf:/etc/frr/frr.startup
         - rare/rt1.conf:/rtr/run/conf/rtr-sw.txt
+        - keepalived/rt1.conf:/etc/keepalived/keepalived.conf
+        - keepalived/rt1.sh:/kd.sh
+
+      exec:
+        - "/kd.sh"
 
     rt2:
       # ---- holod image ---- 
@@ -85,16 +93,24 @@ topology:
       # image: quay.io/frrouting/frr:9.0.2
 
       # ---- RARE/free-rtr image ---
+      # kind: rare
       # NOTE: If 'kind:rare' is enabled, look through the links
       #   to understand how to configure.
-      #
-      # kind: rare
+
+      # ---- keepalived image ----
+      # kind: linux
+      # image: ghcr.io/paul-weqe/keepalived:latest
 
       binds:
         - interfaces/rt2:/etc/network/interfaces
         - holo/rt2.conf:/etc/holo.startup
         - frr/rt2.conf:/etc/frr/frr.startup
         - rare/rt2.conf:/root/router.startup
+        - keepalived/rt2.conf:/etc/keepalived/keepalived.conf
+        - keepalived/rt2.sh:/kd.sh
+
+      exec:
+        - "/kd.sh"
 
   links:
     # 10.0.1.0/24
