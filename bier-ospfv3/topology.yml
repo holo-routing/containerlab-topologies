@@ -1,0 +1,116 @@
+#
+#            +---------+
+#            |         |
+#            |   R00   |
+#       eth0 | 0.0.0.1 | eth1
+#      +-----+         +-----+
+#      |     +---------+     | metric=100
+#      |                     |
+#      | eth0                | eth0
+# +----+----+           +----+----+
+# |         |           |         |
+# |   R01   | eth1      |   R02   |
+# | 0.0.0.2 +-----------+ 0.0.0.3 |
+# |         |      eth1 |         |
+# +----+--+-+           +-+--+----+
+# eth3 |  | eth2     eth2 |  | eth3
+#      |  | metric=100    |  |
+#      |  |  +---------+  |  |
+#      |  |  |         |  |  |
+#      |  +--+   R04   +--+  |
+#      | eth0| 0.0.0.5 |eth1 |
+#      |     |         |     |
+#      |     +---------+     |
+#      |                     |
+#      | eth0           eth0 |
+# +----+----+           +----+----+
+# |         |           |         |
+# |   R03   | eth1      |   R05   |
+# | 0.0.0.4 +-----------+ 0.0.0.6 |
+# |         |      eth1 |         |
+# +---------+           +---------+
+# 
+
+name: bier-ospfv3
+
+topology:
+
+  defaults:
+    kind: linux
+    image: holo-runner
+    network-mode: none
+    sysctls:
+      net.ipv6.conf.all.forwarding: 1
+    exec:
+      # Launch click dataplane process
+      - sh -c "click /etc/bier.click > /tmp/click.log 2>&1 &"
+      - sh -c "tshark -ni any -w /tmp/cap.pcap &"
+      - sh -c "sleep 2 && holo-cli --file /etc/holo/holo.conf"
+    binds:
+      # - ../bier_pkt/target/debug/bier_pkt:/usr/bin/bier_pkt
+      - holo/holod.toml:/etc/holo/holod.toml
+
+  nodes: 
+
+    r0:
+      binds:
+        - holo/r0.conf:/etc/holo/holo.conf
+        - click/r0.click:/etc/bier.click
+      exec:
+        - ip l set eth0 address aa:c1:ab:07:ba:00
+        - ip l set eth1 address aa:c1:ab:07:ba:01
+
+    r1:
+      binds:
+        - holo/r1.conf:/etc/holo/holo.conf
+        - click/r1.click:/etc/bier.click
+      exec:
+        - ip l set eth0 address aa:c1:ab:07:ba:02
+        - ip l set eth1 address aa:c1:ab:07:ba:03
+        - ip l set eth2 address aa:c1:ab:07:ba:04
+        - ip l set eth3 address aa:c1:ab:07:ba:05
+
+    r2:
+      binds:
+        - holo/r2.conf:/etc/holo/holo.conf
+        - click/r2.click:/etc/bier.click
+      exec:
+        - ip l set eth0 address aa:c1:ab:07:ba:06
+        - ip l set eth1 address aa:c1:ab:07:ba:07
+        - ip l set eth2 address aa:c1:ab:07:ba:08
+        - ip l set eth3 address aa:c1:ab:07:ba:09
+
+    r3:
+      binds:
+        - holo/r3.conf:/etc/holo/holo.conf
+        - click/r3.click:/etc/bier.click
+      exec:
+        - ip l set eth0 address aa:c1:ab:07:ba:0a
+        - ip l set eth1 address aa:c1:ab:07:ba:0b
+
+    r4:
+      binds:
+        - holo/r4.conf:/etc/holo/holo.conf
+        - click/r4.click:/etc/bier.click
+      exec:
+        - ip l set eth0 address aa:c1:ab:07:ba:0c
+        - ip l set eth1 address aa:c1:ab:07:ba:0d
+
+    r5:
+      binds:
+        - holo/r5.conf:/etc/holo/holo.conf
+        - click/r5.click:/etc/bier.click
+      exec:
+        - ip l set eth0 address aa:c1:ab:07:ba:0e
+        - ip l set eth1 address aa:c1:ab:07:ba:0f
+        
+  links:
+    - endpoints: ["r0:eth0", "r1:eth0"]
+    - endpoints: ["r0:eth1", "r2:eth0"]
+    - endpoints: ["r1:eth1", "r2:eth1"]
+    - endpoints: ["r1:eth2", "r4:eth0"]
+    - endpoints: ["r2:eth2", "r4:eth1"]
+    - endpoints: ["r1:eth3", "r3:eth0"]
+    - endpoints: ["r2:eth3", "r5:eth0"]
+    - endpoints: ["r3:eth1", "r5:eth1"]
+  
