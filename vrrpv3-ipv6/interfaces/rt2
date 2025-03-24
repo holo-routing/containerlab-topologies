@@ -1,0 +1,18 @@
+auto lo
+auto eth-br1 
+
+iface lo inet static
+    address 2.2.2.2
+    netmask 255.255.255.255
+
+iface lo inet6 static
+    address 2001:db8::2
+
+iface eth-br1 inet static
+    address 10.0.1.2
+    netmask 255.255.255.0
+    mtu 1500
+
+iface eth-br1 inet6 static
+    address fe80::17:45ff:fe00:2222
+    netmask 64

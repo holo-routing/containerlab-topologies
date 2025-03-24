@@ -1,0 +1,19 @@
+auto lo
+auto eth-br1 
+
+iface lo inet static
+    address 1.1.1.1
+    netmask 255.255.255.255
+
+iface lo inet6 static
+    address 2001:db8::1
+
+iface eth-br1 inet static
+    address 10.0.1.1
+    netmask 255.255.255.0
+    mtu 1500
+
+iface eth-br1 inet6 static
+    address fe80::17:45ff:fe00:1111
+    netmask 64
+

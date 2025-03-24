@@ -1,0 +1,113 @@
+#                                   +-------+
+#                                   |       |
+#                                   |   h1  |
+#                                   |       |
+#                                   +-------+
+#                                       | br-host
+#                                       | 10.0.1.3/24
+#                                       |
+#                                       |
+#                                       |
+#                                       |
+#                                  +---------+
+#                                  |         |
+#             +--------------------|   br1   |-------------------+
+#             |                    |         |                   |
+#             |                    +---------+                   |
+#             |                                                  |
+#             |                                                  |
+#             |                                                  |
+#             |                                                  |
+#             |  eth-br1                                         |  eth-br1
+#             |  10.0.1.1/24                                     |  10.0.1.2/24
+#     +-------------+              +----------+             +------------+
+#     |             |              |          |             |            |
+#     |     RT1     |              |  Virtual |             |     RT2    |
+#     |   1.1.1.1   |==============|  Router  |=============|   2.2.2.2  |
+#     |             |              |  10.0.1.5|             |            |
+#     +-------------+              +----------+             +------------+
+#
+# KEY:
+# -----   physical link
+# =====   virtual link
+
+name: vrrp 
+
+topology:
+
+  defaults:
+    binds:
+      - ../scripts/start.sh:/start.sh 
+      - frr/frr-setup.sh:/frr-setup.sh      
+      - frr/daemons:/etc/frr/daemons
+    exec:
+      - "/start.sh"
+      - "/frr-setup.sh"
+
+
+  kinds:
+    rare:
+      image: ghcr.io/rare-freertr/freertr-containerlab:latest
+
+  nodes:
+    br1:
+      kind: bridge
+
+    rt1:
+
+      # ---- holod image ---- 
+      kind: linux
+      image: ghcr.io/holo-routing/holo:latest
+
+      # ---- frr image ---- 
+      # kind: linux
+      # image: quay.io/frrouting/frr:9.0.2
+
+      # ---- RARE/free-rtr image ----
+      # NOTE: If 'kind:rare' is enabled, look through the links
+      #   to understand how to configure.
+      #
+      # kind: rare
+
+      binds:
+        - interfaces/rt1:/etc/network/interfaces
+        - holo/rt1.conf:/etc/holo.startup
+        - frr/rt1.conf:/etc/frr/frr.startup
+        - rare/rt1.conf:/rtr/run/conf/rtr-sw.txt
+
+    rt2:
+      # ---- holod image ---- 
+      kind: linux
+      image: ghcr.io/holo-routing/holo:latest
+
+      # ---- frr image ---- 
+      # kind: linux
+      # image: quay.io/frrouting/frr:9.0.2
+
+      # ---- RARE/free-rtr image ---
+      # NOTE: If 'kind:rare' is enabled, look through the links
+      #   to understand how to configure.
+      #
+      # kind: rare
+
+      binds:
+        - interfaces/rt2:/etc/network/interfaces
+        - holo/rt2.conf:/etc/holo.startup
+        - frr/rt2.conf:/etc/frr/frr.startup
+        - rare/rt2.conf:/root/router.startup
+
+  links:
+    # 10.0.1.0/24
+    # Due to clab's RARE/freertr naming conventions,
+    # interfaces may need to be customized to run RARE.
+    - endpoints: ["host:br-host", "br1:eth-h1"]
+
+    # If rt1 is frr or holo.
+    - endpoints: ["rt1:eth-br1", "br1:eth-rt1"]
+    # If rt1 is RARE/free-rtr.
+    # - endpoints: ["rt1:eth1", "br1:eth-rt1"]
+
+    # If rt2 is frr or holo.
+    - endpoints: ["rt2:eth-br1", "br1:eth-rt2"]
+    # If rt2 is RARE/free-rtr
+    # - endpoints: ["rt2:eth2", "br1:eth-rt2"]

@@ -73,7 +73,7 @@ topology:
         - interfaces/rt1:/etc/network/interfaces
         - holo/rt1.conf:/etc/holo.startup
         - frr/rt1.conf:/etc/frr/frr.startup
-        - rare/rt1.conf:/rtr/run/conf/rtr-sw.txt
+        - rare/rt1.conf:/root/router.startup
 
     rt2:
       # ---- holod image ---- 
@@ -102,12 +102,12 @@ topology:
     # interfaces may need to be customized to run RARE.
     - endpoints: ["host:br-host", "br1:eth-h1"]
 
-    # If rt1 is frr/holo
+    # If rt1 is frr or holo.
     - endpoints: ["rt1:eth-br1", "br1:eth-rt1"]
-    # If rt1 is RARE/free-rtr
+    # If rt1 is RARE/free-rtr.
     # - endpoints: ["rt1:eth1", "br1:eth-rt1"]
 
-    # If rt2 is frr/holo
+    # If rt2 is frr or holo.
     - endpoints: ["rt2:eth-br1", "br1:eth-rt2"]
     # If rt2 is RARE/free-rtr
     # - endpoints: ["rt2:eth2", "br1:eth-rt2"]
