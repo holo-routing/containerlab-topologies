@@ -57,7 +57,7 @@ topology:
     rt1:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
       #image: quay.io/frrouting/frr:9.0.2
       #image: ghcr.io/srl-labs/bird:2.13
 
@@ -79,7 +79,7 @@ topology:
     rt2:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
       #image: quay.io/frrouting/frr:9.0.2
       #image: ghcr.io/srl-labs/bird:2.13
 
@@ -101,7 +101,7 @@ topology:
     rt3:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
       #image: quay.io/frrouting/frr:9.0.2
       #image: ghcr.io/srl-labs/bird:2.13
 
@@ -123,7 +123,7 @@ topology:
     rt4:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
       #image: quay.io/frrouting/frr:9.0.2
       #image: ghcr.io/srl-labs/bird:2.13
 
@@ -145,7 +145,7 @@ topology:
     rt5:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
       #image: quay.io/frrouting/frr:9.0.2
       #image: ghcr.io/srl-labs/bird:2.13
 
@@ -167,7 +167,7 @@ topology:
     rt6:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
       #image: quay.io/frrouting/frr:9.0.2
       #image: ghcr.io/srl-labs/bird:2.13
 

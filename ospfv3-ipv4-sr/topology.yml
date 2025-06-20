@@ -57,7 +57,7 @@ topology:
     rt1:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # Bind mounts
       binds:
@@ -67,7 +67,7 @@ topology:
     rt2:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # Bind mounts
       binds:
@@ -77,7 +77,7 @@ topology:
     rt3:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # Bind mounts
       binds:
@@ -87,7 +87,7 @@ topology:
     rt4:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # Bind mounts
       binds:
@@ -97,7 +97,7 @@ topology:
     rt5:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # Bind mounts
       binds:
@@ -107,7 +107,7 @@ topology:
     rt6:
       # Linux
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # Bind mounts
       binds:
