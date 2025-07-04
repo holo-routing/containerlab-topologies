@@ -57,7 +57,7 @@ topology:
 
       # ---- holod image ---- 
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # ---- frr image ---- 
       # kind: linux
@@ -78,7 +78,7 @@ topology:
     rt2:
       # ---- holod image ---- 
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # ---- frr image ---- 
       # kind: linux

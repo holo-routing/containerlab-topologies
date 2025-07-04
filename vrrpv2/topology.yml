@@ -57,11 +57,11 @@ topology:
 
       # ---- holod image ---- 
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # ---- frr image ---- 
       # kind: linux
-      # image: quay.io/frrouting/frr:9.0.2
+      # image: quay.io/frrouting/frr:10.3.1
 
       # ---- RARE/free-rtr image ----
       # NOTE: If 'kind:rare' is enabled, look through the links
@@ -78,11 +78,11 @@ topology:
     rt2:
       # ---- holod image ---- 
       kind: linux
-      image: ghcr.io/holo-routing/holo:latest
+      image: ghcr.io/holo-routing/holo-bundle:latest
 
       # ---- frr image ---- 
       # kind: linux
-      # image: quay.io/frrouting/frr:9.0.2
+      # image: quay.io/frrouting/frr:10.3.1
 
       # ---- RARE/free-rtr image ---
       # NOTE: If 'kind:rare' is enabled, look through the links

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Wait for the daemons to start
-sleep 2
+sleep 5
 
 # Check for linux routing suites
 if command -v bird || command -v /usr/lib/frr/zebra || command -v holod; then
