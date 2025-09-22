@@ -1,0 +1,18 @@
+auto lo
+auto eth1
+auto eth2
+auto eth3
+
+iface lo inet static
+    address 3.3.3.3
+    netmask 255.255.255.255
+
+iface eth1 inet static
+    address 10.0.2.3
+    netmask 255.255.255.0
+    mtu 1500
+
+iface eth2 inet static
+    address 10.0.4.3
+    netmask 255.255.255.0
+    mtu 1500

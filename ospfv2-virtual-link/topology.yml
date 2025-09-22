@@ -1,0 +1,134 @@
+#                +---------+
+#                |         |
+#                |   RT1   |
+#                | 1.1.1.1 |
+#                |         |
+#                +----+----+
+#                     |
+#                     |10.0.1.0/24
+#                     |
+#                +----+----+
+#                |         |
+#    10.0.2.0/24 |   RT2   | 10.0.3.0/24
+#      +---------+ 2.2.2.2 +---------+
+#      |         |         |         |
+#      |         +---------+         |
+#      |                             |
+# +----+----+                   +----+----+
+# |         |                   |         |
+# |   RT3   |                   |   RT4   |
+# | 3.3.3.3 |                   | 4.4.4.4 |
+# |         |                   |         |
+# +----+----+                   +----+----+
+#      |                             |
+#      |         +---------+         |
+#      |         |         |         |
+#      |         |   RT5   |         |
+#      +---------+ 5.5.5.5 +---------+
+#    10.0.4.0/24 |         | 10.0.5.0/24
+#                +----+----+
+#                     |
+#                     |10.0.6.0/24
+#                     |
+#                +----+----+
+#                |         |
+#                |   RT6   |
+#                | 6.6.6.6 |
+#                |         |
+#                +---------+
+#
+# Area 0: rt1, rt2
+# Area 1: rt2, rt3, rt4, rt5
+# Area 2: rt5, rt6
+#
+# A virtual link is configured between rt2 and rt5 over area 1.
+#
+# All interfaces are configured in the point-to-point mode.
+
+name: ospfv2-virtual-link
+
+topology:
+  defaults:
+    binds:
+      - ../scripts/start.sh:/start.sh
+    exec:
+      - "/start.sh"
+
+  kinds:
+    juniper_cjunosevolved:
+      image: cjunosevolved:25.2R1.8-EVO
+
+  nodes:
+    rt1:
+      # Linux
+      kind: linux
+      image: ghcr.io/holo-routing/holo-bundle:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt1:/etc/network/interfaces
+        - holo/rt1.conf:/etc/holo.startup
+
+    rt2:
+      # Linux
+      kind: linux
+      image: ghcr.io/holo-routing/holo-bundle:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt2:/etc/network/interfaces
+        - holo/rt2.conf:/etc/holo.startup
+
+    rt3:
+      # Linux
+      kind: linux
+      image: ghcr.io/holo-routing/holo-bundle:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt3:/etc/network/interfaces
+        - holo/rt3.conf:/etc/holo.startup
+
+    rt4:
+      # Linux
+      kind: linux
+      image: ghcr.io/holo-routing/holo-bundle:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt4:/etc/network/interfaces
+        - holo/rt4.conf:/etc/holo.startup
+
+    rt5:
+      # Linux
+      kind: linux
+      image: ghcr.io/holo-routing/holo-bundle:latest
+
+      #kind: juniper_cjunosevolved
+      #startup-config: junosevolved/rt5.conf
+      #env:
+      #  CPTX_COSIM: "BX"
+
+      # Bind mounts
+      binds:
+        - interfaces/rt5:/etc/network/interfaces
+        - holo/rt5.conf:/etc/holo.startup
+
+    rt6:
+      # Linux
+      kind: linux
+      image: ghcr.io/holo-routing/holo-bundle:latest
+
+      # Bind mounts
+      binds:
+        - interfaces/rt6:/etc/network/interfaces
+        - holo/rt6.conf:/etc/holo.startup
+
+  links:
+    - endpoints: ["rt1:eth1", "rt2:eth1"]
+    - endpoints: ["rt2:eth2", "rt3:eth1"]
+    - endpoints: ["rt2:eth3", "rt4:eth1"]
+    - endpoints: ["rt3:eth2", "rt5:eth1"]
+    - endpoints: ["rt4:eth2", "rt5:eth2"]
+    - endpoints: ["rt5:eth3", "rt6:eth1"]
+

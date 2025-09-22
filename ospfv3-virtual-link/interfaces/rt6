@@ -1,0 +1,9 @@
+auto lo
+auto eth1
+
+iface lo inet6 static
+    address 2001:db8::6
+    netmask 128
+
+iface eth1 inet manual
+    mtu 1500
