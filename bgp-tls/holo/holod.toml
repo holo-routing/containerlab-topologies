@@ -1,0 +1,59 @@
+# User and group holod runs as (members of @group get administrative access)
+user = "holo"
+group = "holoadm"
+
+# Directory for runtime and persistent state (needs to be writable by @user or @group)
+state_dir = "/var/opt/holo"
+
+# Logging configuration
+[logging]
+
+  # Logging to the standard output
+  [logging.stdout]
+    # Enable or disable
+    enabled = true
+    # Logging style (options: "full", "compact", "pretty", "json")
+    style = "full"
+    # Enable or disable ANSI terminal colors
+    colors = false
+    # Sets whether or not the thread ID of the current thread is displayed
+    show_thread_id = false
+    # Sets whether or not an event’s source code file path and line number are displayed
+    show_source = false
+
+  [logging.file]
+    # Enable or disable
+    enabled = true
+    # File path (needs to be writable by @user or @group)
+    dir = "/var/log/holo"
+    # File name
+    name = "holod.log"
+    # Log rotation (options: "never", "daily", "hourly")
+    rotation = "never"
+    # Logging style (options: "full", "compact", "pretty", "json")
+    style = "full"
+    # Enable or disable ANSI terminal colors
+    colors = false
+    # Sets whether or not the thread ID of the current thread is displayed
+    show_thread_id = false
+    # Sets whether or not an event’s source code file path and line number are displayed
+    show_source = false
+
+# Event recorder (useful for bug reporting)
+[event_recorder]
+  # Enable or disable the event recorder (files are saved in @state_dir)
+  enabled = false
+
+# Northbound servers
+[northbound]
+  # gRPC server configuration
+  [northbound.grpc]
+    # Enable or disable the server
+    enabled = true
+    # gRPC server TCP listening addresses, in addition to the Unix socket
+    #
+    # TCP clients authenticate as users under /ietf-system:system/authentication/user
+    address = []
+    # Serve the TCP addresses without TLS or authentication, giving full
+    # management access to anyone who can reach them (meant for labs only)
+    insecure = true

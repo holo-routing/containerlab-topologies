@@ -1,0 +1,38 @@
+name: bgp-tls
+
+topology:
+  defaults:
+    kind: linux
+    image: holo-runner
+    network-mode: none
+    binds:
+      # - holo/ca.cert.pem:/etc/holo/ca.cert.pem
+      - holo/holod.toml:/etc/holo/holod.toml
+      - holo/__clabNodeName__.cfg:/etc/holo/holo.conf
+      - holo/__clabNodeName__:/etc/holo
+    exec:
+      - sh -c "tshark -ni any -w /tmp/cap.pcap &"
+      - sh -c "sleep 2 && holo-cli --file /etc/holo/holo.conf"
+
+  nodes:
+    r0:
+      stages:
+        create:
+          exec:
+            - command: ./generate_certs.sh holo r0 ED25519 r0.asn65001.example.com 10.0.1.1
+              target: host
+              phase: on-enter
+    r1:
+      startup-delay: 5
+      stages:
+        create:
+          wait-for:
+            - node: r0
+              stage: create
+          exec:
+            - command: ./generate_certs.sh holo r1 ED25519 r1.asn65002.example.com 10.0.1.2
+              target: host
+              phase: on-enter
+
+  links:
+    - endpoints: ["r0:eth0", "r1:eth0"]
